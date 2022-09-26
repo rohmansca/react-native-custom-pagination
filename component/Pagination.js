@@ -26,14 +26,16 @@ export default function Pagination(props) {
   }
 
   switch (true) {
+    case props.totalPages <= 0:
+      break;
     case props.activePage < maxPage:
-      pages = times(maxPage, i => i + 1)
+      const repeat = props.totalPages > maxPage ? maxPage : props.totalPages
+      pages = times(repeat, i => i + 1)
       if (props.totalPages > maxPage) pages.push('.', props.totalPages)
       break;
     case props.activePage > props.totalPages - maxPage:
       pages = times(maxPage, i => props.totalPages - maxPage + i + 1)
       break;
-  
     default:
       pages = [1, '.', props.activePage - 1, props.activePage, props.activePage + 1, '.', props.totalPages]
       break;
@@ -76,7 +78,7 @@ export default function Pagination(props) {
     >
       <View style={styles.paginationWrapper}>
         <TouchableOpacity
-          disabled={props.activePage === 1}
+          disabled={props.activePage === 1 || props.totalPages <= 0}
           style={[
             props.buttonStyles ? props.buttonStyles : styles.buttonStyles,
             props.pressAbleButtonStyles
@@ -104,7 +106,7 @@ export default function Pagination(props) {
         </TouchableOpacity>
         {pageNumbers}
         <TouchableOpacity
-          disabled={props.activePage === props.totalPages}
+          disabled={props.activePage === props.totalPages || props.totalPages <= 0}
           style={[
             props.buttonStyles ? props.buttonStyles : styles.buttonStyles,
             styles.pressAbleButtonStyles,
