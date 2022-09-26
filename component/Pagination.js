@@ -35,6 +35,7 @@ export default function Pagination(props) {
       break;
     case props.activePage > props.totalPages - maxPage:
       pages = times(maxPage, i => props.totalPages - maxPage + i + 1)
+      pages.unshift(1, '.')
       break;
     default:
       pages = [1, '.', props.activePage - 1, props.activePage, props.activePage + 1, '.', props.totalPages]
